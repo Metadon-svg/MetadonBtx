@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTX Engine - Конвертер в BTX</title>
+    <style>
+        /* Глобальные стили */
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4a44c9;
+            --dark: #121230;
+            --light: #f5f5f7;
+            --accent: #ff6b6b;
+            --success: #45d6a3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #1d1d42 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Шапка */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            background: rgba(18, 18, 48, 0.8);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Основная секция с конвертером */
+        .converter-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .converter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .converter-content {
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), #a5a5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #c0c0ff;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Блок загрузки файла */
+        .upload-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(108, 99, 255, 0.5);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .upload-box:hover, .upload-box.drag-over {
+            background: rgba(108, 99, 255, 0.1);
+            border-color: var(--primary);
+        }
+        .upload-icon {
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .upload-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Статус конвертации */
+        .conversion-status {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+            border: 1px solid rgba(108, 99, 255, 0.1);
+            display: none; /* Скрыт по умолчанию */
+        }
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 1rem;
+        }
+        .status-text {
+            font-weight: 600;
+            color: var(--light);
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(18, 18, 48, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
+        }
+
+        .download-button {
+            display: none; /* Скрыта по умолчанию */
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        /* Секция преимуществ */
+        .features {
+            padding: 8rem 5%;
+            background: rgba(10, 10, 25, 0.5);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(108, 99, 255, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(108, 99, 255, 0.1);
+            border-color: rgba(108, 99, 255, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Футер */
+        footer {
+            padding: 5rem 5% 2rem;
+            text-align: center;
+        }
+        
+        .copyright {
+            color: #a0a0c0;
+            font-size: 0.9rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Адаптивность и анимации */
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            h1 { font-size: 2.5rem; }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">BTX Engine</div>
+        <nav>
+            <ul>
+                <li><a href="#converter">Конвертер</a></li>
+                <li><a href="#features">Преимущества</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="converter-section" id="converter">
+        <div class="converter-content fade-in">
+            <h1>Конвертер из PNG/JPG в BTX</h1>
+            <p class="subtitle">Мгновенно преобразуйте ваши изображения в передовой формат BTX с помощью нашего быстрого и безопасного онлайн-инструмента.</p>
+            
+            <input type="file" id="file-input" accept="image/png, image/jpeg" hidden>
+            
+            <div class="upload-box" id="upload-area">
+                <div class="upload-icon">📤</div>
+                <p class="upload-text">Перетащите файлы сюда<br>или нажмите для выбора</p>
+                <p style="color: #a0a0c0; font-size: 0.9rem; margin-top: 1rem;">Поддерживаются PNG, JPG</p>
+            </div>
+            
+            <div class="conversion-status" id="conversion-status">
+                <div class="file-info">
+                    <span class="file-name" id="file-name-display">your_image.jpg</span>
+                    <span class="status-text" id="status-text-display">Конвертация...</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <a class="cta-button download-button" id="download-button">Скачать .BTX файл</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title fade-in">Наши преимущества</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in" style="transition-delay: 100ms;">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Высокая скорость</h3>
+                <p>Вся конвертация происходит прямо в вашем браузере. Ваши файлы не загружаются на сервер, что обеспечивает мгновенный результат.</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 200ms;">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">100% Безопасность</h3>
+                <p>Ваши файлы никогда не покидают ваш компьютер. Мы гарантируем полную конфиденциальность, так как обработка локальная.</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 300ms;">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Работает оффлайн</h3>
+                <p>После первой загрузки страницы конвертер может работать даже без подключения к интернету. Добавьте страницу в закладки!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="copyright">© 2024 BTX Engine. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Анимация при скролле
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                }
+            });
+        }, { threshold: 0.15 });
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Логика конвертера
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const conversionStatus = document.getElementById('conversion-status');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const statusTextDisplay = document.getElementById('status-text-display');
+        const progressBar = document.getElementById('progress-bar');
+        const downloadButton = document.getElementById('download-button');
+        
+        let downloadUrl = null;
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFile(file) {
+            if (downloadUrl) {
+                URL.revokeObjectURL(downloadUrl);
+            }
+            
+            uploadArea.style.display = 'none';
+            conversionStatus.style.display = 'block';
+            downloadButton.style.display = 'none';
+            progressBar.style.transition = 'none'; // Сброс анимации для мгновенной установки в 0
+            progressBar.style.width = '0%';
+            setTimeout(() => { progressBar.style.transition = 'width 0.5s cubic-bezier(0.25, 1, 0.5, 1)'; }, 50);
+
+            statusTextDisplay.style.color = 'var(--light)';
+            statusTextDisplay.textContent = 'Чтение файла...';
+            fileNameDisplay.textContent = file.name;
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                progressBar.style.width = '33%';
+                statusTextDisplay.textContent = 'Анализ изображения...';
+                
+                setTimeout(() => {
+                    progressBar.style.width = '66%';
+                    statusTextDisplay.textContent = 'Создание BTX-структуры...';
+
+                    const btxData = {
+                        format: "BTX Engine",
+                        version: "1.0",
+                        timestamp: new Date().toISOString(),
+                        source: {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                        },
+                        payload: event.target.result
+                    };
+
+                    const btxString = JSON.stringify(btxData, null, 2);
+                    const blob = new Blob([btxString], { type: 'application/octet-stream' });
+                    downloadUrl = URL.createObjectURL(blob);
+                    
+                    setTimeout(() => {
+                         progressBar.style.width = '100%';
+                         statusTextDisplay.style.color = 'var(--success)';
+                         statusTextDisplay.textContent = 'Готово!';
+                         
+                         downloadButton.href = downloadUrl;
+                         downloadButton.setAttribute('download', 'image.btx');
+                         downloadButton.style.display = 'block';
+
+                         let convertAnotherLink = conversionStatus.querySelector('.convert-another-link');
+                         if (!convertAnotherLink) {
+                            convertAnotherLink = document.createElement('a');
+                            convertAnotherLink.href = "#";
+                            convertAnotherLink.textContent = 'Конвертировать другой файл';
+                            convertAnotherLink.classList.add('convert-another-link');
+                            convertAnotherLink.style.display = 'block';
+                            convertAnotherLink.style.textAlign = 'center';
+                            convertAnotherLink.style.marginTop = '1.5rem';
+                            convertAnotherLink.style.color = 'var(--primary)';
+                            convertAnotherLink.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                resetConverter();
+                            });
+                            conversionStatus.appendChild(convertAnotherLink);
+                         }
+                         convertAnotherLink.style.display = 'block';
+
+                    }, 500);
+
+                }, 500);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function resetConverter() {
+             if (downloadUrl) {
+                URL.revokeObjectURL(downloadUrl);
+             }
+             fileInput.value = '';
+             conversionStatus.style.display = 'none';
+             uploadArea.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
