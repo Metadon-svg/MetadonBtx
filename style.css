@@ -1,311 +1,659 @@
 /* Глобальные стили */
-:root {
-    --primary: #6c63ff;
-    --secondary: #4a44c9;
-    --dark: #121230;
-    --light: #f5f5f7;
-    --accent: #ff6b6b;
-    --success: #45d6a3;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
-    background: linear-gradient(135deg, var(--dark) 0%, #1d1d42 100%);
-    color: var(--light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    color: #fff;
     overflow-x: hidden;
     line-height: 1.6;
 }
 
-/* Шапка */
-header {
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Звездный фон */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="100" cy="100" r="1" fill="white"/><circle cx="300" cy="200" r="1" fill="white"/><circle cx="500" cy="150" r="1" fill="white"/><circle cx="700" cy="300" r="1" fill="white"/><circle cx="900" cy="100" r="1" fill="white"/><circle cx="200" cy="400" r="1" fill="white"/><circle cx="400" cy="500" r="1" fill="white"/><circle cx="600" cy="450" r="1" fill="white"/><circle cx="800" cy="600" r="1" fill="white"/><circle cx="100" cy="700" r="1" fill="white"/><circle cx="300" cy="800" r="1" fill="white"/><circle cx="500" cy="750" r="1" fill="white"/><circle cx="700" cy="900" r="1" fill="white"/><circle cx="900" cy="700" r="1" fill="white"/><circle cx="150" cy="250" r="1" fill="white"/><circle cx="350" cy="350" r="1" fill="white"/><circle cx="550" cy="300" r="1" fill="white"/><circle cx="750" cy="450" r="1" fill="white"/><circle cx="950" cy="250" r="1" fill="white"/><circle cx="250" cy="550" r="1" fill="white"/><circle cx="450" cy="650" r="1" fill="white"/><circle cx="650" cy="600" r="1" fill="white"/><circle cx="850" cy="750" r="1" fill="white"/><circle cx="50" cy="850" r="1" fill="white"/><circle cx="250" cy="950" r="1" fill="white"/><circle cx="450" cy="900" r="1" fill="white"/><circle cx="650" cy="1050" r="1" fill="white"/><circle cx="850" cy="850" r="1" fill="white"/></svg>') repeat;
+    z-index: -2;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    animation: twinkle 6s ease-in-out infinite reverse;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Навигация */
+.navbar {
     position: fixed;
     top: 0;
     width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1000;
-    padding: 1.5rem 5%;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: blur(10px);
-    background: rgba(18, 18, 48, 0.8);
-    border-bottom: 1px solid rgba(108, 99, 255, 0.2);
 }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    background-size: 400% 400%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
 }
 
-nav ul {
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.nav-menu {
     display: flex;
     list-style: none;
     gap: 2rem;
 }
 
-nav a {
-    color: var(--light);
+.nav-menu a {
+    color: #fff;
     text-decoration: none;
     font-weight: 500;
-    position: relative;
-    padding: 0.5rem 0;
     transition: all 0.3s ease;
+    position: relative;
 }
 
-nav a::after {
+.nav-menu a::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--primary);
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
     transition: width 0.3s ease;
 }
 
-nav a:hover::after {
+.nav-menu a:hover::after {
     width: 100%;
 }
 
-/* Основная секция */
-.converter-section {
+/* Солнечная система */
+.solar-system-section {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8rem 5% 4rem;
-    text-align: center;
+    padding-top: 80px;
     position: relative;
-    overflow: hidden;
 }
 
-.converter-section::before {
-    content: '';
+.main-title {
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
-    z-index: -1;
-    animation: rotate 20s linear infinite;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    text-align: center;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 10;
 }
 
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.subtitle {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    text-align: center;
+    color: #ccc;
+    z-index: 10;
 }
 
-.converter-content {
-    max-width: 700px;
+.solar-system {
+    position: relative;
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+}
+
+/* Солнце */
+.sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    z-index: 5;
+}
+
+.sun-core {
     width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #ffd700, #ff8c00, #ff4500);
+    border-radius: 50%;
+    animation: sunPulse 2s ease-in-out infinite;
 }
 
-h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, var(--light), #a5a5ff);
+.sun-glow {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+    border-radius: 50%;
+    animation: sunGlow 3s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes sunGlow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Орбиты планет */
+.planet-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: orbit linear infinite;
+}
+
+.mercury-orbit {
+    width: 120px;
+    height: 120px;
+    animation-duration: 3s;
+}
+
+.venus-orbit {
+    width: 180px;
+    height: 180px;
+    animation-duration: 4s;
+}
+
+.earth-orbit {
+    width: 240px;
+    height: 240px;
+    animation-duration: 5s;
+}
+
+.mars-orbit {
+    width: 300px;
+    height: 300px;
+    animation-duration: 6s;
+}
+
+.jupiter-orbit {
+    width: 400px;
+    height: 400px;
+    animation-duration: 12s;
+}
+
+.saturn-orbit {
+    width: 500px;
+    height: 500px;
+    animation-duration: 15s;
+}
+
+.uranus-orbit {
+    width: 600px;
+    height: 600px;
+    animation-duration: 18s;
+}
+
+.neptune-orbit {
+    width: 700px;
+    height: 700px;
+    animation-duration: 20s;
+}
+
+@keyframes orbit {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Планеты */
+.planet {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.planet:hover {
+    transform: translateX(-50%) scale(1.5);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.planet-surface {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+/* Стили планет */
+.mercury .planet-surface {
+    background: linear-gradient(45deg, #8c8c8c, #a0a0a0);
+}
+
+.venus .planet-surface {
+    background: linear-gradient(45deg, #ffd700, #ffb347);
+}
+
+.earth .planet-surface {
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+}
+
+.mars .planet-surface {
+    background: linear-gradient(45deg, #ff6b6b, #c44569);
+}
+
+.jupiter .planet-surface {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    width: 30px;
+    height: 30px;
+    top: -15px;
+}
+
+.saturn .planet-surface {
+    background: linear-gradient(45deg, #f1c40f, #f39c12);
+    width: 25px;
+    height: 25px;
+    top: -12.5px;
+}
+
+.uranus .planet-surface {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.neptune .planet-surface {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+}
+
+/* Луна */
+.moon {
+    position: absolute;
+    top: -5px;
+    right: -15px;
+    width: 8px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 50%;
+}
+
+/* Кольца Сатурна */
+.rings {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: rotateX(75deg);
+}
+
+/* Модальное окно */
+.planet-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 40, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #ff6b6b;
+}
+
+.planet-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.planet-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.planet-details h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
-    color: #c0c0ff;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Блок загрузки */
-.upload-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px dashed rgba(108, 99, 255, 0.5);
-    border-radius: 20px;
-    padding: 4rem 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 2rem;
-}
-
-.upload-box:hover,
-.upload-box.drag-over {
-    background: rgba(108, 99, 255, 0.1);
-    border-color: var(--primary);
-}
-
-.upload-icon {
-    font-size: 4rem;
-    line-height: 1;
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-/* Статус конвертации */
-.conversion-status {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: left;
-    border: 1px solid rgba(108, 99, 255, 0.1);
-    display: none;
-}
-
-#file-list {
-    list-style: none;
-    padding-left: 0;
-    max-height: 200px;
-    overflow-y: auto;
+.planet-details p {
     margin-bottom: 1.5rem;
+    color: #ccc;
+    line-height: 1.6;
 }
 
-#file-list li {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    font-family: 'Consolas', monospace;
-    font-size: 0.9rem;
+.planet-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
 
-.status-text {
-    font-weight: 600;
-    color: var(--light);
+.stat {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
     display: block;
-    text-align: center;
-    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 0.5rem;
 }
 
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    color: white;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
-    border: none;
-    cursor: pointer;
+/* Информационные секции */
+.info-section {
+    padding: 6rem 0;
+    position: relative;
 }
 
-.cta-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
-}
-
-.download-button {
-    display: none;
-    width: 100%;
-    font-size: 1.1rem;
-}
-
-/* Прочие секции */
-.features {
-    padding: 8rem 5%;
-    background: rgba(10, 10, 25, 0.5);
+.info-section.dark {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 5rem;
-    position: relative;
+    margin-bottom: 4rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--primary);
-    border-radius: 2px;
-}
-
-.features-grid {
+.content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    gap: 2rem;
 }
 
-.feature-card {
+.content-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 2.5rem;
-    transition: all 0.4s ease;
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(108, 99, 255, 0.1);
 }
 
-.feature-card:hover {
-    transform: translateY(-10px);
-    background: rgba(108, 99, 255, 0.1);
-    border-color: rgba(108, 99, 255, 0.3);
+.content-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-}
-
-.feature-title {
+.content-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #4ecdc4;
 }
 
-footer {
-    padding: 5rem 5% 2rem;
+.content-card p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* TON 618 секция */
+.ton618-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.ton618-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.black-hole {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.event-horizon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #000, #333);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+.accretion-disk {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b);
+    animation: rotate 10s linear infinite;
+}
+
+.jet-stream {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 300px;
+    background: linear-gradient(to top, transparent, #4ecdc4, transparent);
+    animation: jetPulse 2s ease-in-out infinite;
+}
+
+@keyframes jetPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.ton618-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #4ecdc4;
+}
+
+.ton618-info p {
+    margin-bottom: 2rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.stat-item {
     text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.copyright {
-    color: #a0a0c0;
+.stat-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
     font-size: 0.9rem;
-    padding-top: 2rem;
+    color: #999;
+}
+
+.ton618-info ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.ton618-info li {
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+/* Футер */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem 0;
+    text-align: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Адаптивность и анимации */
+.footer p {
+    color: #999;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-    nav ul {
+    .nav-menu {
         display: none;
     }
-
-    h1 {
-        font-size: 2.5rem;
+    
+    .main-title {
+        font-size: 2rem;
+        top: 100px;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        top: 160px;
+    }
+    
+    .solar-system {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .planet-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .ton618-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .planet-stats {
+        grid-template-columns: 1fr;
     }
 }
 
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
-}
-
-.fade-in.appear {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 480px) {
+    .solar-system {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
 }
