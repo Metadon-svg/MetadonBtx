@@ -3,508 +3,827 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTX Engine - Конвертер в BTX</title>
+    <title>Изучение Космоса - Солнечная Система</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Глобальные стили */
-        :root {
-            --primary: #6c63ff;
-            --secondary: #4a44c9;
-            --dark: #121230;
-            --light: #f5f5f7;
-            --accent: #ff6b6b;
-            --success: #45d6a3;
-        }
-        
+        /* Космические стили */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
+
         body {
-            background: linear-gradient(135deg, var(--dark) 0%, #1d1d42 100%);
-            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            background: #000;
+            color: #fff;
             overflow-x: hidden;
             line-height: 1.6;
         }
-        
-        /* Шапка */
-        header {
+
+        /* Анимированное звездное небо */
+        .stars {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            z-index: 1000;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            background: rgba(18, 18, 48, 0.8);
-            border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+            height: 100%;
+            background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="star" cx="50%" cy="50%"><stop offset="0%" stop-color="%23fff"/><stop offset="100%" stop-color="%23fff" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="1" fill="url(%23star)"/><circle cx="300" cy="200" r="0.5" fill="url(%23star)"/><circle cx="500" cy="150" r="1.5" fill="url(%23star)"/><circle cx="700" cy="300" r="0.8" fill="url(%23star)"/><circle cx="900" cy="250" r="1.2" fill="url(%23star)"/><circle cx="200" cy="400" r="0.6" fill="url(%23star)"/><circle cx="400" cy="500" r="1" fill="url(%23star)"/><circle cx="600" cy="450" r="0.7" fill="url(%23star)"/><circle cx="800" cy="550" r="1.3" fill="url(%23star)"/><circle cx="150" cy="600" r="0.9" fill="url(%23star)"/><circle cx="350" cy="700" r="1.1" fill="url(%23star)"/><circle cx="550" cy="650" r="0.5" fill="url(%23star)"/><circle cx="750" cy="750" r="1.4" fill="url(%23star)"/><circle cx="950" cy="800" r="0.8" fill="url(%23star)"/></svg>') repeat;
+            z-index: -2;
         }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+
+        .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Заголовок */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease-in-out infinite;
+            margin-bottom: 1rem;
         }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-        
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0a0ff;
+            font-weight: 300;
+        }
+
+        /* Основной контент */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
             position: relative;
-            padding: 0.5rem 0;
-            transition: all 0.3s ease;
+            z-index: 10;
         }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
+
+        /* Солнечная система */
+        .solar-system-section {
+            text-align: center;
+            margin-bottom: 6rem;
+            padding: 4rem 0;
         }
-        
-        nav a:hover::after {
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .solar-system {
+            position: relative;
             width: 100%;
-        }
-        
-        /* Основная секция с конвертером */
-        .converter-section {
-            min-height: 100vh;
+            height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem 5% 4rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            margin: 2rem 0;
         }
 
-        .converter-section::before {
-            content: '';
+        /* Солнце */
+        .sun {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
-            z-index: -1;
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .converter-content {
-            max-width: 700px;
-            width: 100%;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--light), #a5a5ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            color: #c0c0ff;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Блок загрузки файла */
-        .upload-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(108, 99, 255, 0.5);
-            border-radius: 20px;
-            padding: 4rem 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
-        }
-        .upload-box:hover, .upload-box.drag-over {
-            background: rgba(108, 99, 255, 0.1);
-            border-color: var(--primary);
-        }
-        .upload-icon {
-            font-size: 4rem;
-            line-height: 1;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .upload-text {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        /* Статус конвертации */
-        .conversion-status {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: left;
-            border: 1px solid rgba(108, 99, 255, 0.1);
-            display: none; /* Скрыт по умолчанию */
-        }
-        .file-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-        .file-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-right: 1rem;
-        }
-        .status-text {
-            font-weight: 600;
-            color: var(--light);
-        }
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background-color: rgba(18, 18, 48, 0.8);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--success));
-            border-radius: 4px;
-            transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
-        }
-
-        .download-button {
-            display: none; /* Скрыта по умолчанию */
-            width: 100%;
-            font-size: 1.1rem;
-        }
-        
-        /* Секция преимуществ */
-        .features {
-            padding: 8rem 5%;
-            background: rgba(10, 10, 25, 0.5);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 5rem;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 80px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
+            height: 80px;
+            background: radial-gradient(circle, #ffd700, #ff8c00, #ff4500);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 60px #ffd700,
+                0 0 120px #ff8c00,
+                0 0 180px #ff4500;
+            animation: sunPulse 4s ease-in-out infinite;
+            z-index: 100;
         }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+
+        .sun-glow {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            border-radius: 50%;
+            animation: glowPulse 3s ease-in-out infinite;
         }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Планеты */
+        .planet {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .planet:hover {
+            transform: scale(1.2);
+            z-index: 200;
+        }
+
+        .planet-body {
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Меркурий */
+        .mercury {
+            width: 12px;
+            height: 12px;
+            animation: orbit 8s linear infinite;
+        }
+
+        .mercury .planet-body {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(45deg, #8c8c8c, #a0a0a0);
+            box-shadow: 0 0 10px rgba(140, 140, 140, 0.5);
+        }
+
+        .mercury .orbit {
+            width: 120px;
+            height: 120px;
+        }
+
+        /* Венера */
+        .venus {
+            width: 18px;
+            height: 18px;
+            animation: orbit 12s linear infinite;
+        }
+
+        .venus .planet-body {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .venus .orbit {
+            width: 180px;
+            height: 180px;
+        }
+
+        /* Земля */
+        .earth {
+            width: 20px;
+            height: 20px;
+            animation: orbit 16s linear infinite;
+        }
+
+        .earth .planet-body {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #4a90e2, #7cb342);
+            box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+        }
+
+        .earth .orbit {
+            width: 240px;
+            height: 240px;
+        }
+
+        /* Марс */
+        .mars {
+            width: 16px;
+            height: 16px;
+            animation: orbit 20s linear infinite;
+        }
+
+        .mars .planet-body {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(45deg, #ff6b35, #cc4a37);
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+
+        .mars .orbit {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Юпитер */
+        .jupiter {
+            width: 32px;
+            height: 32px;
+            animation: orbit 28s linear infinite;
+        }
+
+        .jupiter .planet-body {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #ffa726, #ff7043);
+            box-shadow: 0 0 25px rgba(255, 167, 38, 0.5);
+        }
+
+        .jupiter .orbit {
+            width: 360px;
+            height: 360px;
+        }
+
+        /* Сатурн */
+        .saturn {
+            width: 28px;
+            height: 28px;
+            animation: orbit 36s linear infinite;
+        }
+
+        .saturn .planet-body {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(45deg, #ffd54f, #ffb74d);
+            box-shadow: 0 0 20px rgba(255, 213, 79, 0.5);
+        }
+
+        .saturn .rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 12px;
+            border: 2px solid rgba(255, 213, 79, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 213, 79, 0.3);
+        }
+
+        .saturn .orbit {
+            width: 420px;
+            height: 420px;
+        }
+
+        /* Уран */
+        .uranus {
+            width: 24px;
+            height: 24px;
+            animation: orbit 44s linear infinite;
+        }
+
+        .uranus .planet-body {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #81c784, #4db6ac);
+            box-shadow: 0 0 18px rgba(129, 199, 132, 0.5);
+        }
+
+        .uranus .orbit {
+            width: 480px;
+            height: 480px;
+        }
+
+        /* Нептун */
+        .neptune {
+            width: 22px;
+            height: 22px;
+            animation: orbit 52s linear infinite;
+        }
+
+        .neptune .planet-body {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(45deg, #42a5f5, #5c6bc0);
+            box-shadow: 0 0 18px rgba(66, 165, 245, 0.5);
+        }
+
+        .neptune .orbit {
+            width: 540px;
+            height: 540px;
+        }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(50%) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(50%) rotate(-360deg); }
+        }
+
+        /* Модальное окно */
+        .planet-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(108, 99, 255, 0.1);
         }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(108, 99, 255, 0.1);
-            border-color: rgba(108, 99, 255, 0.3);
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(20, 20, 40, 0.95), rgba(40, 40, 80, 0.95));
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #fff;
+            transition: color 0.3s ease;
         }
-        
-        .feature-title {
-            font-size: 1.5rem;
+
+        .close-btn:hover {
+            color: #ff6b6b;
+        }
+
+        .planet-info {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .planet-image img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .planet-details h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
             margin-bottom: 1rem;
+            color: #fff;
         }
-        
-        /* Футер */
-        footer {
-            padding: 5rem 5% 2rem;
-            text-align: center;
+
+        .planet-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #ccc;
         }
-        
-        .copyright {
-            color: #a0a0c0;
-            font-size: 0.9rem;
+
+        .planet-stats {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #a0a0ff;
+        }
+
+        /* Информационные секции */
+        .info-section {
+            margin-bottom: 6rem;
+            padding: 3rem 0;
+        }
+
+        .info-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(20, 20, 40, 0.8), rgba(40, 40, 80, 0.8));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .info-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        .ton618-stats {
+            margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        /* Адаптивность и анимации */
+
+        .ton618-stats .stat {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(20, 20, 40, 0.8), rgba(40, 40, 80, 0.8));
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: #a0a0ff;
+            font-size: 1rem;
+        }
+
+        /* Адаптивность */
         @media (max-width: 768px) {
-            nav ul { display: none; }
-            h1 { font-size: 2.5rem; }
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .solar-system {
+                height: 400px;
+            }
+            
+            .planet-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .info-card {
+                padding: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
         }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .solar-system {
+                height: 300px;
+            }
+            
+            .sun {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .sun-glow {
+                width: 100px;
+                height: 100px;
+                top: -20px;
+                left: -20px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">BTX Engine</div>
-        <nav>
-            <ul>
-                <li><a href="#converter">Конвертер</a></li>
-                <li><a href="#features">Преимущества</a></li>
-            </ul>
-        </nav>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <header class="header">
+        <h1 class="title">Изучение Космоса</h1>
+        <p class="subtitle">Погрузитесь в тайны Вселенной</p>
     </header>
 
-    <section class="converter-section" id="converter">
-        <div class="converter-content fade-in">
-            <h1>Конвертер из PNG/JPG в BTX</h1>
-            <p class="subtitle">Мгновенно преобразуйте ваши изображения в передовой формат BTX с помощью нашего быстрого и безопасного онлайн-инструмента.</p>
-            
-            <input type="file" id="file-input" accept="image/png, image/jpeg" hidden>
-            
-            <div class="upload-box" id="upload-area">
-                <div class="upload-icon">📤</div>
-                <p class="upload-text">Перетащите файлы сюда<br>или нажмите для выбора</p>
-                <p style="color: #a0a0c0; font-size: 0.9rem; margin-top: 1rem;">Поддерживаются PNG, JPG</p>
+    <main class="main-content">
+        <!-- Солнечная система -->
+        <section class="solar-system-section">
+            <h2 class="section-title">Солнечная Система</h2>
+            <div class="solar-system">
+                <div class="sun">
+                    <div class="sun-glow"></div>
+                </div>
+                
+                <!-- Меркурий -->
+                <div class="planet mercury" data-planet="mercury">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Венера -->
+                <div class="planet venus" data-planet="venus">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Земля -->
+                <div class="planet earth" data-planet="earth">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Марс -->
+                <div class="planet mars" data-planet="mars">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Юпитер -->
+                <div class="planet jupiter" data-planet="jupiter">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Сатурн -->
+                <div class="planet saturn" data-planet="saturn">
+                    <div class="planet-body"></div>
+                    <div class="rings"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Уран -->
+                <div class="planet uranus" data-planet="uranus">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
+                
+                <!-- Нептун -->
+                <div class="planet neptune" data-planet="neptune">
+                    <div class="planet-body"></div>
+                    <div class="orbit"></div>
+                </div>
             </div>
-            
-            <div class="conversion-status" id="conversion-status">
-                <div class="file-info">
-                    <span class="file-name" id="file-name-display">your_image.jpg</span>
-                    <span class="status-text" id="status-text-display">Конвертация...</span>
+        </section>
+
+        <!-- Модальное окно для информации о планетах -->
+        <div class="planet-modal" id="planetModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="planet-info">
+                    <div class="planet-image">
+                        <img id="planetImage" src="" alt="Планета">
+                    </div>
+                    <div class="planet-details">
+                        <h3 id="planetName"></h3>
+                        <p id="planetDescription"></p>
+                        <div class="planet-stats">
+                            <div class="stat">
+                                <span class="stat-label">Расстояние от Солнца:</span>
+                                <span id="planetDistance"></span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Период обращения:</span>
+                                <span id="planetPeriod"></span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Диаметр:</span>
+                                <span id="planetDiameter"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                <a class="cta-button download-button" id="download-button">Скачать .BTX файл</a>
             </div>
         </div>
-    </section>
 
-    <section class="features" id="features">
-        <h2 class="section-title fade-in">Наши преимущества</h2>
-        <div class="features-grid">
-            <div class="feature-card fade-in" style="transition-delay: 100ms;">
-                <div class="feature-icon">🚀</div>
-                <h3 class="feature-title">Высокая скорость</h3>
-                <p>Вся конвертация происходит прямо в вашем браузере. Ваши файлы не загружаются на сервер, что обеспечивает мгновенный результат.</p>
+        <!-- Информационные секции -->
+        <section class="info-section">
+            <h2 class="section-title">Происхождение Солнечной Системы</h2>
+            <div class="info-content">
+                <div class="info-card">
+                    <h3>Образование Солнечной Системы</h3>
+                    <p>Солнечная система образовалась примерно 4,6 миллиарда лет назад из гигантского молекулярного облака. Под действием гравитации это облако начало сжиматься, образуя в центре протозвезду - будущее Солнце. Вокруг неё сформировался протопланетный диск, из которого впоследствии образовались планеты, астероиды и другие небесные тела.</p>
+                    <p>Процесс формирования длился около 100 миллионов лет. Сначала образовались планеты земной группы (Меркурий, Венера, Земля, Марс), а затем газовые гиганты (Юпитер, Сатурн, Уран, Нептун).</p>
+                </div>
             </div>
-            <div class="feature-card fade-in" style="transition-delay: 200ms;">
-                <div class="feature-icon">🛡️</div>
-                <h3 class="feature-title">100% Безопасность</h3>
-                <p>Ваши файлы никогда не покидают ваш компьютер. Мы гарантируем полную конфиденциальность, так как обработка локальная.</p>
-            </div>
-            <div class="feature-card fade-in" style="transition-delay: 300ms;">
-                <div class="feature-icon">🌐</div>
-                <h3 class="feature-title">Работает оффлайн</h3>
-                <p>После первой загрузки страницы конвертер может работать даже без подключения к интернету. Добавьте страницу в закладки!</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p class="copyright">© 2024 BTX Engine. Все права защищены.</p>
+        <section class="info-section">
+            <h2 class="section-title">Происхождение Вселенной</h2>
+            <div class="info-content">
+                <div class="info-card">
+                    <h3>Большой Взрыв</h3>
+                    <p>Вселенная возникла примерно 13,8 миллиарда лет назад в результате события, известного как Большой Взрыв. В этот момент всё пространство, время, материя и энергия были сконцентрированы в одной точке бесконечно малого размера и бесконечно высокой температуры.</p>
+                    <p>В первые секунды после Большого Взрыва образовались элементарные частицы, а затем атомы водорода и гелия. Гравитация начала собирать материю в галактики, звёзды и планеты, создавая сложную структуру Вселенной, которую мы наблюдаем сегодня.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">TON 618 - Сверхмассивная Черная Дыра</h2>
+            <div class="info-content">
+                <div class="info-card">
+                    <h3>Самая Массивная Известная Черная Дыра</h3>
+                    <p>TON 618 - это квазар, расположенный в созвездии Гончих Псов на расстоянии около 10,4 миллиарда световых лет от Земли. В его центре находится сверхмассивная черная дыра массой примерно 66 миллиардов солнечных масс, что делает её одной из самых массивных известных черных дыр во Вселенной.</p>
+                    <p>TON 618 излучает огромное количество энергии, в основном в виде рентгеновского и ультрафиолетового излучения. Его светимость превышает светимость нашей галактики Млечный Путь в тысячи раз. Эта черная дыра является ярким примером того, насколько экстремальными могут быть объекты во Вселенной.</p>
+                    <div class="ton618-stats">
+                        <div class="stat">
+                            <span class="stat-label">Масса:</span>
+                            <span>66 миллиардов солнечных масс</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Расстояние:</span>
+                            <span>10,4 миллиарда световых лет</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Диаметр горизонта событий:</span>
+                            <span>390 миллиардов километров</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Изучение Космоса. Погрузитесь в тайны Вселенной.</p>
     </footer>
 
     <script>
-        // Анимация при скролле
-        const fadeElements = document.querySelectorAll('.fade-in');
+        // Данные о планетах
+        const planetData = {
+            mercury: {
+                name: "Меркурий",
+                description: "Самая близкая к Солнцу планета и самая маленькая в Солнечной системе. Меркурий имеет экстремальные перепады температуры - от -180°C до +430°C. Поверхность планеты покрыта кратерами, как у Луны.",
+                distance: "57,9 млн км",
+                period: "88 земных дней",
+                diameter: "4 879 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%238c8c8c'/><circle cx='30' cy='30' r='5' fill='%23a0a0a0'/><circle cx='70' cy='20' r='3' fill='%23a0a0a0'/><circle cx='20' cy='70' r='4' fill='%23a0a0a0'/></svg>"
+            },
+            venus: {
+                name: "Венера",
+                description: "Вторая планета от Солнца, часто называемая 'сестрой Земли' из-за схожего размера. Венера - самая горячая планета в Солнечной системе с температурой поверхности около 460°C. Атмосфера состоит в основном из углекислого газа.",
+                distance: "108,2 млн км",
+                period: "225 земных дней",
+                diameter: "12 104 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ffd700'/><circle cx='35' cy='35' r='8' fill='%23ffa500' opacity='0.7'/><circle cx='65' cy='25' r='5' fill='%23ffa500' opacity='0.5'/></svg>"
+            },
+            earth: {
+                name: "Земля",
+                description: "Наша родная планета, единственная известная планета с жизнью. Земля имеет уникальную атмосферу, богатую кислородом, и большие запасы жидкой воды. Луна - единственный естественный спутник Земли.",
+                distance: "149,6 млн км",
+                period: "365,25 дней",
+                diameter: "12 742 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%234a90e2'/><circle cx='30' cy='30' r='8' fill='%237cb342'/><circle cx='70' cy='40' r='6' fill='%237cb342'/><circle cx='20' cy='70' r='5' fill='%237cb342'/></svg>"
+            },
+            mars: {
+                name: "Марс",
+                description: "Красная планета, четвертая от Солнца. Марс имеет тонкую атмосферу и холодный климат. На поверхности видны вулканы, каньоны и полярные ледяные шапки. У Марса есть два маленьких спутника.",
+                distance: "227,9 млн км",
+                period: "687 земных дней",
+                diameter: "6 780 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff6b35'/><circle cx='30' cy='30' r='6' fill='%23cc4a37'/><circle cx='70' cy='25' r='4' fill='%23cc4a37'/><circle cx='25' cy='70' r='5' fill='%23cc4a37'/></svg>"
+            },
+            jupiter: {
+                name: "Юпитер",
+                description: "Самая большая планета в Солнечной системе, газовый гигант. Юпитер имеет мощное магнитное поле и множество спутников. Знаменитое Большое Красное Пятно - это гигантский шторм, бушующий уже сотни лет.",
+                distance: "778,5 млн км",
+                period: "12 земных лет",
+                diameter: "139 820 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ffa726'/><ellipse cx='50' cy='50' rx='35' ry='15' fill='%23ff7043' opacity='0.6'/><circle cx='35' cy='40' r='3' fill='%23ff7043' opacity='0.8'/></svg>"
+            },
+            saturn: {
+                name: "Сатурн",
+                description: "Шестая планета от Солнца, известная своими великолепными кольцами. Сатурн - второй по величине газовый гигант. Кольца состоят из миллиардов частиц льда и камня. У Сатурна более 80 спутников.",
+                distance: "1,4 млрд км",
+                period: "29,5 земных лет",
+                diameter: "116 460 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='35' fill='%23ffd54f'/><ellipse cx='50' cy='50' rx='45' ry='8' fill='%23ffb74d' opacity='0.6' stroke='%23ffb74d' stroke-width='1'/><ellipse cx='50' cy='50' rx='40' ry='6' fill='%23ffb74d' opacity='0.4'/></svg>"
+            },
+            uranus: {
+                name: "Уран",
+                description: "Седьмая планета от Солнца, ледяной гигант. Уран вращается вокруг своей оси, лежа на боку. Планета имеет бледно-голубой цвет из-за метана в атмосфере. У Урана есть система колец и 27 спутников.",
+                distance: "2,9 млрд км",
+                period: "84 земных года",
+                diameter: "50 724 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2381c784'/><ellipse cx='50' cy='50' rx='35' ry='6' fill='%234db6ac' opacity='0.4' stroke='%234db6ac' stroke-width='1'/></svg>"
+            },
+            neptune: {
+                name: "Нептун",
+                description: "Восьмая и самая дальняя планета от Солнца, ледяной гигант. Нептун имеет самые быстрые ветры в Солнечной системе - до 2 100 км/ч. Планета имеет глубокий синий цвет и систему колец.",
+                distance: "4,5 млрд км",
+                period: "165 земных лет",
+                diameter: "49 244 км",
+                image: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2342a5f5'/><ellipse cx='50' cy='50' rx='35' ry='5' fill='%235c6bc0' opacity='0.4' stroke='%235c6bc0' stroke-width='1'/></svg>"
+            }
+        };
+
+        // Получение элементов
+        const modal = document.getElementById('planetModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const planets = document.querySelectorAll('.planet');
+
+        // Обработчики событий
+        planets.forEach(planet => {
+            planet.addEventListener('click', function() {
+                const planetType = this.getAttribute('data-planet');
+                const data = planetData[planetType];
+                
+                if (data) {
+                    document.getElementById('planetName').textContent = data.name;
+                    document.getElementById('planetDescription').textContent = data.description;
+                    document.getElementById('planetDistance').textContent = data.distance;
+                    document.getElementById('planetPeriod').textContent = data.period;
+                    document.getElementById('planetDiameter').textContent = data.diameter;
+                    document.getElementById('planetImage').src = data.image;
+                    
+                    modal.style.display = 'block';
+                }
+            });
+        });
+
+        // Закрытие модального окна
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Закрытие по клику вне модального окна
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Закрытие по клавише Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('appear');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, { threshold: 0.15 });
-        fadeElements.forEach(el => observer.observe(el));
+        }, observerOptions);
 
-        // Логика конвертера
-        const uploadArea = document.getElementById('upload-area');
-        const fileInput = document.getElementById('file-input');
-        const conversionStatus = document.getElementById('conversion-status');
-        const fileNameDisplay = document.getElementById('file-name-display');
-        const statusTextDisplay = document.getElementById('status-text-display');
-        const progressBar = document.getElementById('progress-bar');
-        const downloadButton = document.getElementById('download-button');
-        
-        let downloadUrl = null;
-
-        uploadArea.addEventListener('click', () => fileInput.click());
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        // Наблюдение за информационными секциями
+        document.querySelectorAll('.info-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
         });
-
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('drag-over');
-        });
-        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('drag-over');
-            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-        });
-
-        function handleFile(file) {
-            if (downloadUrl) {
-                URL.revokeObjectURL(downloadUrl);
-            }
-            
-            uploadArea.style.display = 'none';
-            conversionStatus.style.display = 'block';
-            downloadButton.style.display = 'none';
-            progressBar.style.transition = 'none'; // Сброс анимации для мгновенной установки в 0
-            progressBar.style.width = '0%';
-            setTimeout(() => { progressBar.style.transition = 'width 0.5s cubic-bezier(0.25, 1, 0.5, 1)'; }, 50);
-
-            statusTextDisplay.style.color = 'var(--light)';
-            statusTextDisplay.textContent = 'Чтение файла...';
-            fileNameDisplay.textContent = file.name;
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                progressBar.style.width = '33%';
-                statusTextDisplay.textContent = 'Анализ изображения...';
-                
-                setTimeout(() => {
-                    progressBar.style.width = '66%';
-                    statusTextDisplay.textContent = 'Создание BTX-структуры...';
-
-                    const btxData = {
-                        format: "BTX Engine",
-                        version: "1.0",
-                        timestamp: new Date().toISOString(),
-                        source: {
-                            name: file.name,
-                            size: file.size,
-                            type: file.type,
-                        },
-                        payload: event.target.result
-                    };
-
-                    const btxString = JSON.stringify(btxData, null, 2);
-                    const blob = new Blob([btxString], { type: 'application/octet-stream' });
-                    downloadUrl = URL.createObjectURL(blob);
-                    
-                    setTimeout(() => {
-                         progressBar.style.width = '100%';
-                         statusTextDisplay.style.color = 'var(--success)';
-                         statusTextDisplay.textContent = 'Готово!';
-                         
-                         downloadButton.href = downloadUrl;
-                         downloadButton.setAttribute('download', 'image.btx');
-                         downloadButton.style.display = 'block';
-
-                         let convertAnotherLink = conversionStatus.querySelector('.convert-another-link');
-                         if (!convertAnotherLink) {
-                            convertAnotherLink = document.createElement('a');
-                            convertAnotherLink.href = "#";
-                            convertAnotherLink.textContent = 'Конвертировать другой файл';
-                            convertAnotherLink.classList.add('convert-another-link');
-                            convertAnotherLink.style.display = 'block';
-                            convertAnotherLink.style.textAlign = 'center';
-                            convertAnotherLink.style.marginTop = '1.5rem';
-                            convertAnotherLink.style.color = 'var(--primary)';
-                            convertAnotherLink.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                resetConverter();
-                            });
-                            conversionStatus.appendChild(convertAnotherLink);
-                         }
-                         convertAnotherLink.style.display = 'block';
-
-                    }, 500);
-
-                }, 500);
-            };
-            
-            reader.readAsDataURL(file);
-        }
-
-        function resetConverter() {
-             if (downloadUrl) {
-                URL.revokeObjectURL(downloadUrl);
-             }
-             fileInput.value = '';
-             conversionStatus.style.display = 'none';
-             uploadArea.style.display = 'block';
-        }
     </script>
 </body>
 </html>

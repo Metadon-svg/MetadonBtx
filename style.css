@@ -1,311 +1,530 @@
-/* Глобальные стили */
-:root {
-    --primary: #6c63ff;
-    --secondary: #4a44c9;
-    --dark: #121230;
-    --light: #f5f5f7;
-    --accent: #ff6b6b;
-    --success: #45d6a3;
-}
-
+/* Космические стили */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
-    background: linear-gradient(135deg, var(--dark) 0%, #1d1d42 100%);
-    color: var(--light);
+    font-family: 'Exo 2', sans-serif;
+    background: #000;
+    color: #fff;
     overflow-x: hidden;
     line-height: 1.6;
 }
 
-/* Шапка */
-header {
+/* Анимированное звездное небо */
+.stars {
     position: fixed;
     top: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 1.5rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(10px);
-    background: rgba(18, 18, 48, 0.8);
-    border-bottom: 1px solid rgba(108, 99, 255, 0.2);
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-nav a {
-    color: var(--light);
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
-
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
     left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-}
-
-nav a:hover::after {
     width: 100%;
+    height: 100%;
+    background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="star" cx="50%" cy="50%"><stop offset="0%" stop-color="%23fff"/><stop offset="100%" stop-color="%23fff" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="1" fill="url(%23star)"/><circle cx="300" cy="200" r="0.5" fill="url(%23star)"/><circle cx="500" cy="150" r="1.5" fill="url(%23star)"/><circle cx="700" cy="300" r="0.8" fill="url(%23star)"/><circle cx="900" cy="250" r="1.2" fill="url(%23star)"/><circle cx="200" cy="400" r="0.6" fill="url(%23star)"/><circle cx="400" cy="500" r="1" fill="url(%23star)"/><circle cx="600" cy="450" r="0.7" fill="url(%23star)"/><circle cx="800" cy="550" r="1.3" fill="url(%23star)"/><circle cx="150" cy="600" r="0.9" fill="url(%23star)"/><circle cx="350" cy="700" r="1.1" fill="url(%23star)"/><circle cx="550" cy="650" r="0.5" fill="url(%23star)"/><circle cx="750" cy="750" r="1.4" fill="url(%23star)"/><circle cx="950" cy="800" r="0.8" fill="url(%23star)"/></svg>') repeat;
+    z-index: -2;
 }
 
-/* Основная секция */
-.converter-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8rem 5% 4rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.converter-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
+.twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
     z-index: -1;
-    animation: rotate 20s linear infinite;
+    animation: twinkle 3s ease-in-out infinite;
 }
 
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
 }
 
-.converter-content {
-    max-width: 700px;
-    width: 100%;
+/* Заголовок */
+.header {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    z-index: 10;
 }
 
-h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, var(--light), #a5a5ff);
+.title {
+    font-family: 'Orbitron', monospace;
+    font-size: 4rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 400% 400%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease-in-out infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
-    color: #c0c0ff;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 1.5rem;
+    color: #a0a0ff;
+    font-weight: 300;
 }
 
-/* Блок загрузки */
-.upload-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px dashed rgba(108, 99, 255, 0.5);
-    border-radius: 20px;
-    padding: 4rem 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 2rem;
-}
-
-.upload-box:hover,
-.upload-box.drag-over {
-    background: rgba(108, 99, 255, 0.1);
-    border-color: var(--primary);
-}
-
-.upload-icon {
-    font-size: 4rem;
-    line-height: 1;
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-/* Статус конвертации */
-.conversion-status {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
+/* Основной контент */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
-    text-align: left;
-    border: 1px solid rgba(108, 99, 255, 0.1);
-    display: none;
+    position: relative;
+    z-index: 10;
 }
 
-#file-list {
-    list-style: none;
-    padding-left: 0;
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 1.5rem;
-}
-
-#file-list li {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    font-family: 'Consolas', monospace;
-    font-size: 0.9rem;
-}
-
-.status-text {
-    font-weight: 600;
-    color: var(--light);
-    display: block;
+/* Солнечная система */
+.solar-system-section {
     text-align: center;
-    margin-bottom: 2rem;
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    color: white;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
-    border: none;
-    cursor: pointer;
-}
-
-.cta-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
-}
-
-.download-button {
-    display: none;
-    width: 100%;
-    font-size: 1.1rem;
-}
-
-/* Прочие секции */
-.features {
-    padding: 8rem 5%;
-    background: rgba(10, 10, 25, 0.5);
+    margin-bottom: 6rem;
+    padding: 4rem 0;
 }
 
 .section-title {
-    text-align: center;
+    font-family: 'Orbitron', monospace;
     font-size: 2.5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.solar-system {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+/* Солнце */
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #ffd700, #ff8c00, #ff4500);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 60px #ffd700,
+        0 0 120px #ff8c00,
+        0 0 180px #ff4500;
+    animation: sunPulse 4s ease-in-out infinite;
+    z-index: 100;
+}
+
+.sun-glow {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+    border-radius: 50%;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Планеты */
+.planet {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.planet:hover {
+    transform: scale(1.2);
+    z-index: 200;
+}
+
+.planet-body {
+    border-radius: 50%;
     position: relative;
 }
 
-.section-title::after {
-    content: '';
+.orbit {
     position: absolute;
-    bottom: -15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--primary);
-    border-radius: 2px;
+    transform: translate(-50%, -50%);
 }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+/* Меркурий */
+.mercury {
+    width: 12px;
+    height: 12px;
+    animation: orbit 8s linear infinite;
 }
 
-.feature-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 2.5rem;
-    transition: all 0.4s ease;
+.mercury .planet-body {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(45deg, #8c8c8c, #a0a0a0);
+    box-shadow: 0 0 10px rgba(140, 140, 140, 0.5);
+}
+
+.mercury .orbit {
+    width: 120px;
+    height: 120px;
+}
+
+/* Венера */
+.venus {
+    width: 18px;
+    height: 18px;
+    animation: orbit 12s linear infinite;
+}
+
+.venus .planet-body {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.venus .orbit {
+    width: 180px;
+    height: 180px;
+}
+
+/* Земля */
+.earth {
+    width: 20px;
+    height: 20px;
+    animation: orbit 16s linear infinite;
+}
+
+.earth .planet-body {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, #4a90e2, #7cb342);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+}
+
+.earth .orbit {
+    width: 240px;
+    height: 240px;
+}
+
+/* Марс */
+.mars {
+    width: 16px;
+    height: 16px;
+    animation: orbit 20s linear infinite;
+}
+
+.mars .planet-body {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(45deg, #ff6b35, #cc4a37);
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+}
+
+.mars .orbit {
+    width: 300px;
+    height: 300px;
+}
+
+/* Юпитер */
+.jupiter {
+    width: 32px;
+    height: 32px;
+    animation: orbit 28s linear infinite;
+}
+
+.jupiter .planet-body {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #ffa726, #ff7043);
+    box-shadow: 0 0 25px rgba(255, 167, 38, 0.5);
+}
+
+.jupiter .orbit {
+    width: 360px;
+    height: 360px;
+}
+
+/* Сатурн */
+.saturn {
+    width: 28px;
+    height: 28px;
+    animation: orbit 36s linear infinite;
+}
+
+.saturn .planet-body {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(45deg, #ffd54f, #ffb74d);
+    box-shadow: 0 0 20px rgba(255, 213, 79, 0.5);
+}
+
+.saturn .rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 12px;
+    border: 2px solid rgba(255, 213, 79, 0.6);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 213, 79, 0.3);
+}
+
+.saturn .orbit {
+    width: 420px;
+    height: 420px;
+}
+
+/* Уран */
+.uranus {
+    width: 24px;
+    height: 24px;
+    animation: orbit 44s linear infinite;
+}
+
+.uranus .planet-body {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(45deg, #81c784, #4db6ac);
+    box-shadow: 0 0 18px rgba(129, 199, 132, 0.5);
+}
+
+.uranus .orbit {
+    width: 480px;
+    height: 480px;
+}
+
+/* Нептун */
+.neptune {
+    width: 22px;
+    height: 22px;
+    animation: orbit 52s linear infinite;
+}
+
+.neptune .planet-body {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(45deg, #42a5f5, #5c6bc0);
+    box-shadow: 0 0 18px rgba(66, 165, 245, 0.5);
+}
+
+.neptune .orbit {
+    width: 540px;
+    height: 540px;
+}
+
+@keyframes orbit {
+    from { transform: rotate(0deg) translateX(50%) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(50%) rotate(-360deg); }
+}
+
+/* Модальное окно */
+.planet-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(108, 99, 255, 0.1);
 }
 
-.feature-card:hover {
-    transform: translateY(-10px);
-    background: rgba(108, 99, 255, 0.1);
-    border-color: rgba(108, 99, 255, 0.3);
+.modal-content {
+    background: linear-gradient(135deg, rgba(20, 20, 40, 0.95), rgba(40, 40, 80, 0.95));
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s ease;
 }
 
-.feature-title {
-    font-size: 1.5rem;
+.close-btn:hover {
+    color: #ff6b6b;
+}
+
+.planet-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.planet-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.planet-details h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
     margin-bottom: 1rem;
+    color: #fff;
 }
 
-footer {
-    padding: 5rem 5% 2rem;
-    text-align: center;
+.planet-details p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: #ccc;
 }
 
-.copyright {
-    color: #a0a0c0;
-    font-size: 0.9rem;
+.planet-stats {
+    display: grid;
+    gap: 1rem;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #a0a0ff;
+}
+
+/* Информационные секции */
+.info-section {
+    margin-bottom: 6rem;
+    padding: 3rem 0;
+}
+
+.info-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.info-card {
+    background: linear-gradient(135deg, rgba(20, 20, 40, 0.8), rgba(40, 40, 80, 0.8));
+    padding: 3rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.info-card h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.info-card p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #ccc;
+}
+
+.ton618-stats {
+    margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Адаптивность и анимации */
-@media (max-width: 768px) {
-    nav ul {
-        display: none;
-    }
+.ton618-stats .stat {
+    margin-bottom: 0.5rem;
+}
 
-    h1 {
+/* Футер */
+.footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(20, 20, 40, 0.8), rgba(40, 40, 80, 0.8));
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 4rem;
+}
+
+.footer p {
+    color: #a0a0ff;
+    font-size: 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .title {
         font-size: 2.5rem;
     }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .solar-system {
+        height: 400px;
+    }
+    
+    .planet-info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .info-card {
+        padding: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
 }
 
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
-}
-
-.fade-in.appear {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .solar-system {
+        height: 300px;
+    }
+    
+    .sun {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .sun-glow {
+        width: 100px;
+        height: 100px;
+        top: -20px;
+        left: -20px;
+    }
 }
